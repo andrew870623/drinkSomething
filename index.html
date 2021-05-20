@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <title>drinkSomething</title>
+    </head>
+
+    <body>
+        
+        <main id="app">
+            
+            <section class="items">
+                <h4>Pick your drinks</h4>
+                <div v-for="product in products" 
+                    class="product"
+                    @click="toggleActive(product)"
+                    :class="{selected: product.active}"
+                    >
+                    <!-- ... 
+                    <div class="photo">
+                        <img :src="product.photo">
+                    </div>
+                     ... -->
+                    
+                    <div class="description">
+                        <span class="name">{{product.name}}</span>
+                        <span class="price">$ {{product.price}}</span>
+                        <input v-if="product.active" v-model="product.note" placeholder="additional note" @click.stop="product.note">
+                        
+                        <div class="quantity-area">
+                            <template v-if="product.active">
+                                <button :disabled="product.quantity<=1" @click.stop="product.quantity--">-</button> 
+                                <span class="quantity">{{product.quantity}}</span> 
+                                <button @click.stop="product.quantity++">+</button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+                <div class="instructions">
+                    Instructions:
+                    <ul>
+                        <li>Click the drink you want to add a new order to the list</li>
+                        <li>Click again the drink to delete the order from the list</li>
+                        <li>Click the +/- button to add or reduce the number of drinks</li>
+                        <li>Edit additional notes from the text field when you order</li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section class="summary" v-if="total()>0">
+                <strong>Order Details</strong>
+                <button @click=sort()>asc</button>
+                <button @click=sortdesc()>desc</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="product in products">
+                            <template v-if="product.active">
+                                <td>{{product.quantity + 'x ' + product.name}}</td>
+                                <td>{{(product.quantity * product.price).toFixed(2)}}</td>
+                                <td>{{product.note}}</td>
+                            </template>
+                        </tr>
+                        
+                        <tr>
+                            <th>Total</th>
+                            <th>{{total()}}</th>
+                            <th></th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="instructions">
+                    Notes:
+                    <ul>
+                        <li>Sort the list with price by clicking asc or desc button</li>
+                        <li>You can also know the total price from the list</li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+
+        <script src="https://unpkg.com/vue@next"></script>
+        <script src="scripts.js"></script>
+    </body>
+
+</html>
