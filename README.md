@@ -1,6 +1,6 @@
 # drinkSomething
 Instructions:
-1.Click the drink you want to add a new order to the list
+1.Click the drink you want to add a new order to the list<br>
 2.Click again the drink to delete the order from the list
 3.Click the +/- button to add or reduce the number of drinks
 4.Edit additional notes from the text field when you order
